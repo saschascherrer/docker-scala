@@ -10,10 +10,13 @@ COPY scala-@SCALA_VERSION.tgz sbt-@SBT_VERSION.tgz /opt/scala/
 RUN tar -xf /opt/scala/scala-@SCALA_VERSION.tgz \
  && mv scala-@SCALA_VERSION $SCALA_HOME \
  && rm /opt/scala/scala-@SCALA_VERSION.tgz \
- && tar -xf /opt/scala/sbt-@SBT_VERSION.tgz \
- && mv sbt $SBT_HOME \
- && rm /opt/scala/sbt-@SBT_VERSION.tgz \
  && mkdir /opt/workdir
+
+COPY sbt-@SBT_VERSION.tgz /opt/scala/
+RUN tar -xf /opt/scala/sbt-@SBT_VERSION.tgz \
+ && mv sbt $SBT_HOME \
+ && rm /opt/scala/sbt-@SBT_VERSION.tgz
+
 WORKDIR /opt/workdir
 
 RUN echo "===== DEBUG INFOS =====" \
