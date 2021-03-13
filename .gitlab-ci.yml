@@ -1,0 +1,8 @@
+image: quay.io/containers/podman
+
+build:
+    script:
+        - ./build.sh
+    only:
+      refs:
+          - main
