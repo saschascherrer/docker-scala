@@ -1,0 +1,27 @@
+FROM docker.io/library/adoptopenjdk:11
+
+MAINTAINER Sascha Scherrer <dev@saschascherrer.de>
+
+ENV SCALA_HOME "/opt/scala/scala-@SCALA_VERSION"
+ENV PATH "$SCALA_HOME/bin:$PATH"
+
+COPY scala-@SCALA_VERSION.tgz /opt/scala/scala-@SCALA_VERSION.tgz
+RUN tar -xf /opt/scala/scala-@SCALA_VERSION.tgz \
+ && mv scala-@SCALA_VERSION $SCALA_HOME \
+ && rm /opt/scala/scala-@SCALA_VERSION.tgz \
+ && mkdir /opt/workdir
+WORKDIR /opt/workdir
+
+RUN echo "===== DEBUG INFOS =====" \
+ && echo "/opt" && ls -l /opt \
+ && echo "/opt/scala" && ls -l /opt/scala \
+ && echo "/opt/scala/scala-@SCALA_VERSION" && ls -l /opt/scala/scala-@SCALA_VERSION \
+ && echo "SCALA_HOME=$SCALA_HOME" \
+ && echo "PATH=$PATH" \
+ && echo "Java  VERSION: $(java -version)"
+
+COPY . .
+RUN echo "===== HELLO WORLD =====" \
+ && echo "Current path : $(pwd)" \
+ && scalac Hello.scala \
+ && scala Hello \
