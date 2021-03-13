@@ -1,0 +1,9 @@
+name: scala-image
+on: [push]
+jobs:
+  build-scala-image:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run the build script
+        run: ./build.sh
