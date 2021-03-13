@@ -1,0 +1,25 @@
+name: scala-image
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'LICENSE'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'LICENSE'
+  schedule:
+    - cron: '15 2 17 * *'
+jobs:
+  build-scala-image:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run the build script
+        run: ./build.sh
