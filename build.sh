@@ -12,12 +12,10 @@ echo "SCALA: $SCALA_VERSION (from Release Tag $SCALA_LATEST_RELEASE_TAG)"
 echo "SBT:   $SBT_VERSION (from Release Tag $SBT_LATEST_RELEASE_TAG)"
 
 if [[ ! -s scala-${SCALA_VERSION}.tgz ]]; then
-        wget --no-verbose --output-document=scala-${SCALA_VERSION}.tgz \
-		https://downloads.lightbend.com/scala/${SCALA_VERSION}/scala-${SCALA_VERSION}.tgz
+        curl -q https://downloads.lightbend.com/scala/${SCALA_VERSION}/scala-${SCALA_VERSION}.tgz > scala-${SCALA_VERSION}.tgz	
 fi
 if [[ ! -s sbt-${SBT_VERSION}.tgz ]]; then
-        wget --no-verbose --output-document=sbt-${SBT_VERSION}.tgz \
-		https://github.com/sbt/sbt/releases/download/${SBT_LATEST_RELEASE_TAG}/sbt-${SBT_VERSION}.tgz
+        curl -q https://github.com/sbt/sbt/releases/download/${SBT_LATEST_RELEASE_TAG}/sbt-${SBT_VERSION}.tgz > sbt-${SBT_VERSION}.tgz	
 fi
 
 sed "s/@SCALA_VERSION/${SCALA_VERSION}/g" Dockerfile.template | sed "s/@SBT_VERSION/${SBT_VERSION}/g" > Dockerfile
